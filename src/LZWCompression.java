@@ -24,11 +24,17 @@ public class LZWCompression {
 		while(s.hasNext()) {
 			input += s.nextLine() + "\n";
 		}
+		for(int i = 0; i < 256; i++) {
+			map.put("" + i, "" + (char)(i));
+		}
 
 	}
 	
 	static void solve() {
 		out.print(input.substring(0, input.length() - 2));
+		for(String str: map.keySet()) {
+			out.println(str + ": " +  map.get(str));
+		}
 	}
 	
 
