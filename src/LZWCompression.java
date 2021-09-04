@@ -25,7 +25,7 @@ public class LZWCompression {
 			input += s.nextLine() + "\n";
 		}
 		for(int i = 0; i < 256; i++) {
-			map.put("" + i, "" + (char)(i));
+			map.put(Integer.toBinaryString(i), "" + (char)(i));
 		}
 
 	}
