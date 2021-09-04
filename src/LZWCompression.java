@@ -12,8 +12,23 @@ public class LZWCompression {
 		in = new BufferedReader(new FileReader(new File("lzw-file2.txt")));
 		out = new PrintWriter(new File("output.txt"));
 		s = new Scanner(new File("input.txt"));
+		
+		init();
+		solve();
+		
 		in.close();
 		out.close();
+	}
+	
+	static void init() throws IOException{
+		while(s.hasNext()) {
+			input += s.nextLine() + "\n";
+		}
+
+	}
+	
+	static void solve() {
+		out.print(input.substring(0, input.length() - 2));
 	}
 	
 
