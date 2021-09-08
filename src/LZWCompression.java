@@ -1,7 +1,11 @@
 import java.util.*;
 import java.io.*;
 public class LZWCompression {
-	
+	/*
+	 * Possible optimization procedures:
+	 * 	1) Start dictionary's bit size at 9 so we cut out the unnecessary starting loop
+	 *  
+	 */
 	static PrintWriter out;
 	static String inputString = "";
 	static Scanner in;
@@ -10,10 +14,10 @@ public class LZWCompression {
 	
 	public static void main(String[] args) throws IOException{
 		out = new PrintWriter(new File("output.txt"));
-		in = new Scanner(new File("input.txt"));
+		in = new Scanner(new File("lzw-file3.txt"));
 		
-		init();
-		solve();
+		init(); //Input/Output stuff
+		solve(); //Actually solving stuff
 		
 		in.close();
 		out.close();
@@ -30,39 +34,65 @@ public class LZWCompression {
 	
 	static void solve() {
 		
+		//Variables:
 		int remainingSpaces = 0; //Counts the available spaces left in the dictionary.
-		int index = 0; //Will track our current index inside the input string.
-		String currentEntry = ""; //Holds our current string every iteration.
+		int index = 1; //Will track our 'next' index inside the input string.
+		String currentEntry = "" + inputString.charAt(0); //Holds our current string every iteration.
 		String ans = ""; //Our answer string to be output at the very end.
+		String currentKey = "011111111"; //Holds our latest bit # to use in dictionary.
+		String binary = "";
+		
+		//Loop:
 		while(index < inputString.length()) { //Parse through each index of the input string.
+			
 			if(remainingSpaces == 0) { //If dictionary runs out of space, increase bit size by 1.
 				remainingSpaces = (int) Math.pow(2, bitSize++);
-				//Updating our dictionary with keys 1-bit longer:
-				LinkedHashMap<String, String> temporaryMap = new LinkedHashMap<String, String>();
-				for(String s: map.keySet()) {
-					temporaryMap.put("0" + s, map.get(s));
-				}
-				map.clear();
-				for(String s: temporaryMap.keySet()) {
-					map.put(s, temporaryMap.get(s));
-				}
-				//
+				updateMap(); //Updates dictionary with increased bit-size.
 			}
+			
 			//Need to update information every iteration:
 			remainingSpaces--; //Subtract one remaining space in the dictionary.
-			currentEntry += inputString.charAt(index++); //Update our current entry string.
-			System.out.println(currentEntry);
-//			if(map.containsValue(currentEntry)) {
-//				continue;
-//			}else {
-//
-//			}
+			
+			if(map.containsValue(currentEntry + inputString.charAt(index))) { //Is Current + Next in our dictionary?
+				currentEntry += inputString.charAt(index); //If so, update our current entry string.
+			}else {
+				ans += currentEntry; //Add the current entry to the output answer.
+				currentKey = updateKey(currentKey); //Update our latest bit key to use.
+				binary += currentKey;
+				map.put(currentKey, currentEntry + inputString.charAt(index)); //Add Current + Next to dictionary.
+				currentEntry =  "" + inputString.charAt(index); //Update Current.
+			}
+			index++;
 		}
-		out.print(inputString.substring(0, inputString.length() - 2));
-		for(String str: map.keySet()) {
-			out.println(str + ": " +  map.get(str));
+		
+		
+		//Print stuff
+//		out.println(inputString.substring(0, inputString.length() - 2));
+//		for(String str: map.keySet()) {
+//			out.println(str + ": " +  map.get(str));
+//		}
+		//out.println(ans);
+		byte[] byteArray = binary.getBytes();
+		out.print(Arrays.toString(byteArray));
+	}
+	
+	static String updateKey(String key) { //Adds 1 to the dictionary key in binary.
+		int number = Integer.parseInt(key, 2);
+		int sum = number + 1;
+		return Integer.toBinaryString(sum);
+	}
+	
+	static void updateMap() { //Updating our dictionary with keys 1-bit longer.
+		LinkedHashMap<String, String> temporaryMap = new LinkedHashMap<String, String>();
+		for(String s: map.keySet()) {
+			temporaryMap.put("0" + s, map.get(s));
+		}
+		map.clear();
+		for(String s: temporaryMap.keySet()) {
+			map.put(s, temporaryMap.get(s));
 		}
 	}
+	
 	
 
 }
