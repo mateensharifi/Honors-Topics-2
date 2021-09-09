@@ -69,12 +69,6 @@ public class LZWCompression {
 		
 		
 		//Print stuff
-//		out.println(inputString.substring(0, inputString.length() - 2));
-//		for(String str: map.keySet()) {
-//			out.println(str + ": " +  map.get(str));
-//		}
-		//out.println(ans);
-		//out.print(Arrays.toString(byteArray));
 		String str = binaryToDecimal(binary);
 		out.print(str);
 		//out.println(binary);
