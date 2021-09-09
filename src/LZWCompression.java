@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 public class LZWCompression {
 	/*
 	 * Possible optimization procedures:
@@ -27,12 +28,13 @@ public class LZWCompression {
 		while(in.hasNext()) {
 			inputString += in.nextLine() + "\n";
 		}
-		for(int i = 0; i < 256; i++) {
+		inputString = inputString.trim(); //gets rid of unnecessary newline at string's end
+		for(int i = 0; i < 256; i++) { //set up ASCII table with default values
 			map.put(Integer.toBinaryString(i), "" + (char)(i));
 		}
 	}
 	
-	static void solve() {
+	static void solve() throws IOException{
 		
 		//Variables:
 		int remainingSpaces = 0; //Counts the available spaces left in the dictionary.
@@ -72,8 +74,10 @@ public class LZWCompression {
 //			out.println(str + ": " +  map.get(str));
 //		}
 		//out.println(ans);
-		byte[] byteArray = binary.getBytes();
-		out.print(Arrays.toString(byteArray));
+		//out.print(Arrays.toString(byteArray));
+		String str = binaryToDecimal(binary);
+		out.print(str);
+		//out.println(binary);
 	}
 	
 	static String updateKey(String key) { //Adds 1 to the dictionary key in binary.
@@ -91,6 +95,14 @@ public class LZWCompression {
 		for(String s: temporaryMap.keySet()) {
 			map.put(s, temporaryMap.get(s));
 		}
+	}
+	
+	static String binaryToDecimal(String binary) {
+		String decimal = "";
+		for(int i = 0; i < binary.length(); i+= 8) {
+			decimal += (char)Integer.parseInt(binary.substring(i, Math.min(i + 8, binary.length())), 2);
+		}
+		return decimal;
 	}
 	
 	
