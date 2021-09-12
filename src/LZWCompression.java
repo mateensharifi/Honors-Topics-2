@@ -15,7 +15,7 @@ public class LZWCompression {
 	
 	public static void main(String[] args) throws IOException{
 		out = new PrintWriter(new File("output.txt"));
-		in = new Scanner(new File("lzw-file3.txt"));
+		in = new Scanner(new File("input.txt"));
 		
 		init(); //Input/Output stuff
 		solve(); //Actually solving stuff
@@ -70,7 +70,8 @@ public class LZWCompression {
 		
 		//Print stuff
 		String str = binaryToDecimal(binary);
-		out.print(str);
+		out.println(binary);
+		out.print(decimalToBinary(str));
 		//out.println(binary);
 	}
 	
@@ -93,8 +94,8 @@ public class LZWCompression {
 	
 	static String binaryToDecimal(String binary) {
 		String decimal = "";
-		for(int i = 0; i < binary.length(); i+= 8) {
-			decimal += (char)Integer.parseInt(binary.substring(i, Math.min(i + 8, binary.length())), 2);
+		for(int i = 0; i < binary.length(); i+= 9) {
+			decimal += (char)Integer.parseInt(binary.substring(i, Math.min(i + 9, binary.length())), 2);
 		}
 		return decimal;
 	}
@@ -109,8 +110,8 @@ public class LZWCompression {
 		String binary = ""; 
 		for (int i = 0; i < decimal.length(); i++)
 		{
-			Integer store = (int)((decimal.charAt(i))); 
-			binary += store.toString(2); 
+			int store = (int)((decimal.charAt(i))); 
+			binary += Integer.toString(store,2); 
 		}
 		return binary; 
 	}
