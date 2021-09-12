@@ -19,8 +19,8 @@ public class tester {
 //		//byte[] bytes = binary.getBytes();
 //		System.out.println(Arrays.toString(array));
 		
-		String s = "\n";
-		System.out.println(s.charAt(1));
+		LZWCompression test = new LZWCompression (); 
+		test.solve();
 	}
 
 }

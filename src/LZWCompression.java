@@ -99,6 +99,21 @@ public class LZWCompression {
 		return decimal;
 	}
 	
+	static void decoder () throws IOException
+	{
+		
+	}
+	
+	static String decimalToBinary (String decimal)
+	{
+		String binary = ""; 
+		for (int i = 0; i < decimal.length(); i++)
+		{
+			Integer store = (int)((decimal.charAt(i))); 
+			binary += store.toString(2); 
+		}
+		return binary; 
+	}
 	
 
 }
