@@ -5,22 +5,8 @@ import java.nio.charset.StandardCharsets;
 public class tester {
 	
 	public static void main(String[] args) throws IOException{
-////		byte[] bytes = {'A', 'B'};
-////		String s = new String(bytes); // possibly with a charset
-////		char[] chars = s.toCharArray();
-////		System.out.println(Arrays.toString(chars));
-//		String binary = "0001010101010001111000";
-//
-//		long a = Long.parseLong(binary, 2);
-//		ByteBuffer bytes = ByteBuffer.allocate(2000).putLong(a);
-//		byte[] array = bytes.array();
-//		
-//		
-//		//byte[] bytes = binary.getBytes();
-//		System.out.println(Arrays.toString(array));
-		
-		LZWCompression test = new LZWCompression (); 
-		test.solve();
+		int n = ;
+		System.out.print((Integer.toBinaryString(n)));
 	}
 
 }
