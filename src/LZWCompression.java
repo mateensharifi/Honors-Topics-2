@@ -256,7 +256,7 @@ public class LZWCompression {
 		}
 		return output; 
 	}
-	
+	// 
 	static String convertToBinary(String toConvert, LinkedHashMap <String, String> mapper)
 	{
 		
@@ -265,7 +265,7 @@ public class LZWCompression {
 		{
 			searchKey += "0"; 
 		}
-		for (int i = 0; i < map.size(); i++)
+		for (int i = 0; i < mapper.size(); i++)
 		{
 			if (mapper.get(searchKey).equals(toConvert))
 			{
@@ -275,8 +275,9 @@ public class LZWCompression {
 		}
 		return searchKey; 
 	}
-	
-	static String getFirstBinaryString(String binary)
+	// Input a key.
+	// Given inputed key, finds associated value, gets first character of value as a String, and finds key associated with that string value
+	static String getFirstBinaryString(String binary)  
 	{
 		 String firstBinary;  
 		 String firstString = decodedMap.get(binary); 
