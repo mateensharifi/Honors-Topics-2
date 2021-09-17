@@ -141,6 +141,9 @@ public class LZWCompression {
 		return decimal;
 	}
 
+	// This is da code (decode)
+	//This method changes the value of the decoded String from "" to the decoded version of the encoded String 
+	
 	static void decode () throws IOException
 	{
 		decodeInputString =  decimalToBinary(toDecodeInputString) ; 
@@ -235,7 +238,8 @@ public class LZWCompression {
 	}
 	
 
-
+//Input a String
+// This method, will convert that String to binary and then break the String up into ArrayList componenets each with size equal to the bitSize and return that ArrayList
 	static ArrayList <String> decimalToBinary (String decimal)
 	{
 		ArrayList <String> output = new ArrayList <String> (); 
@@ -256,7 +260,8 @@ public class LZWCompression {
 		}
 		return output; 
 	}
-	// 
+	// Input a String value toConvert to binary and a LinkedHashMap of Strings
+	// This method finds and returns the binary String "key" that is associated with some value ToConvert in the map
 	static String convertToBinary(String toConvert, LinkedHashMap <String, String> mapper)
 	{
 		
@@ -277,6 +282,7 @@ public class LZWCompression {
 	}
 	// Input a key.
 	// Given inputed key, finds associated value, gets first character of value as a String, and finds key associated with that string value
+	// returns that non-inputed key
 	static String getFirstBinaryString(String binary)  
 	{
 		 String firstBinary;  
