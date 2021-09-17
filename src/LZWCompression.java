@@ -37,7 +37,7 @@ public class LZWCompression {
 
 	}
 
-	static void init() throws IOException{
+	static void init() throws IOException{ //(British method)
 		while(in.hasNext()) {
 			inputString += in.nextLine() + "\n";
 		}
