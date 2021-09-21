@@ -25,7 +25,7 @@ public class LZWCompression {
 		// out = new PrintWriter(new File("output.txt"));
 		// in = new Scanner(new File("input.txt"));
 		out = new PrintWriter(new File("dummy.txt"));
-		in = new Scanner(new File("lzw-file1.txt"));
+		in = new Scanner(new File("lzw-file3.txt"));
 		long startTime = System.currentTimeMillis();
 		init(); // Input/Output stuff
 		solve(); // Actually solving stuff
@@ -55,7 +55,7 @@ public class LZWCompression {
 
 		// Variables:
 		int remainingSpaces = 0; // Counts the available spaces left in the dictionary.
-		int index = 1; // Will track our 'next' index inside the input string.
+		int nextIndex = 1; // Will track our 'next' index inside the input string.
 		String currentEntry = "" + inputString.charAt(0); // Holds our current string every iteration.
 		String ans = ""; // Our answer string to be output at the very end.
 		String currentKey = "011111111"; // Holds our latest bit # to use in dictionary.
@@ -63,7 +63,7 @@ public class LZWCompression {
 		String tracker = "";
 
 		// Loop:
-		while (index < inputString.length() + 1) { // Parse through each index of the input string.
+		while (nextIndex < inputString.length() + 1) { // Parse through each index of the input string.
 
 //			if(remainingSpaces == 0) { //If dictionary runs out of space, increase bit size by 1.
 //				remainingSpaces = (int) Math.pow(2, bitSizeEncoder++);
@@ -72,13 +72,13 @@ public class LZWCompression {
 
 			// Need to update information every iteration:
 			remainingSpaces--; // Subtract one remaining space in the dictionary.
-			if (index == inputString.length()) {
+			if (nextIndex == inputString.length()) {
 				ans += convertToBinary(currentEntry, map); // Add the current entry to the output answer.
 				currentKey = updateKey(currentKey); // Update our latest bit key to use.
 				binary += currentKey;
-			} else if (map.containsValue(currentEntry + inputString.charAt(index))) { // Is Current + Next in our
+			} else if (map.containsValue(currentEntry + inputString.charAt(nextIndex))) { // Is Current + Next in our
 																						// dictionary?
-				currentEntry += inputString.charAt(index); // If so, update our current entry string.
+				currentEntry += inputString.charAt(nextIndex); // If so, update our current entry string.
 			} else {
 				ans += convertToBinary(currentEntry, map); // Add the current entry to the output answer.
 				currentKey = updateKey(currentKey); // Update our latest bit key to use.
@@ -92,10 +92,10 @@ public class LZWCompression {
 //					updateKey(searchKey); 
 //				}
 				binary += currentKey;
-				map.put(currentKey, currentEntry + inputString.charAt(index)); // Add Current + Next to dictionary.
-				currentEntry = "" + inputString.charAt(index); // Update Current.
+				map.put(currentKey, currentEntry + inputString.charAt(nextIndex)); // Add Current + Next to dictionary.
+				currentEntry = "" + inputString.charAt(nextIndex); // Update Current.
 			}
-			index++;
+			nextIndex++;
 		}
 
 		// Print stuff
@@ -173,8 +173,7 @@ public class LZWCompression {
 			} else if (nextEntry.compareTo(currentKey) >= 0) {
 				decoded += decodedMap.get(currentEntry);
 				currentKey = updateKey(currentKey);
-				decodedMap.put(currentKey,
-						decodedMap.get(currentEntry) + decodedMap.get(getFirstBinaryString(currentEntry)));
+				decodedMap.put(currentKey, decodedMap.get(currentEntry) + decodedMap.get(getFirstBinaryString(currentEntry)));
 				r++;
 				l++;
 				currentEntry = "" + decodeInputString.get(l);
