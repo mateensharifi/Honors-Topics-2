@@ -32,7 +32,7 @@ public class LZWCompression {
 		solve(); //Actually solving stuff
 		decode (); 
 		out.print(decoded);
-		System.out.println(System.currentTimeMillis() - startTime);
+		System.out.println("Time elapsed: " + (System.currentTimeMillis() - startTime) + " milliseconds");
 		in.close();
 		out.close();
 		
