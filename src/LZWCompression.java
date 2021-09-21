@@ -26,15 +26,16 @@ public class LZWCompression {
 		//		in = new Scanner(new File("input.txt"));
 		out = new PrintWriter(new File("dummy.txt"));
 		in = new Scanner(new File("lzw-file3.txt"));
-
+		
+		long startTime = System.currentTimeMillis();
 		init(); //Input/Output stuff
 		solve(); //Actually solving stuff
 		decode (); 
 		out.print(decoded);
-
+		System.out.println(System.currentTimeMillis() - startTime);
 		in.close();
 		out.close();
-
+		
 	}
 
 	static void init() throws IOException{ //(British method)
@@ -121,7 +122,7 @@ public class LZWCompression {
 		}
 		return newKey; 
 	}
-
+//Not used
 //	static void updateMap( LinkedHashMap<String, String> mapper) { //Updating our dictionary with keys 1-bit longer.
 //		LinkedHashMap<String, String> temporaryMap = new LinkedHashMap<String, String>();
 //		for(String s: mapper.keySet()) {

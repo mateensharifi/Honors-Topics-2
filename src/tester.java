@@ -5,8 +5,8 @@ import java.nio.charset.StandardCharsets;
 public class tester {
 	
 	public static void main(String[] args) throws IOException{
-		int n = ;
-		System.out.print((Integer.toBinaryString(n)));
+//		int n = ;
+//		System.out.print((Integer.toBinaryString(n)));
 	}
 
 }
