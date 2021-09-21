@@ -122,16 +122,16 @@ public class LZWCompression {
 		return newKey; 
 	}
 
-	static void updateMap( LinkedHashMap<String, String> mapper) { //Updating our dictionary with keys 1-bit longer.
-		LinkedHashMap<String, String> temporaryMap = new LinkedHashMap<String, String>();
-		for(String s: mapper.keySet()) {
-			temporaryMap.put("0" + s, mapper.get(s));
-		}
-		mapper.clear();
-		for(String s: temporaryMap.keySet()) {
-			mapper.put(s, temporaryMap.get(s));
-		}
-	}
+//	static void updateMap( LinkedHashMap<String, String> mapper) { //Updating our dictionary with keys 1-bit longer.
+//		LinkedHashMap<String, String> temporaryMap = new LinkedHashMap<String, String>();
+//		for(String s: mapper.keySet()) {
+//			temporaryMap.put("0" + s, mapper.get(s));
+//		}
+//		mapper.clear();
+//		for(String s: temporaryMap.keySet()) {
+//			mapper.put(s, temporaryMap.get(s));
+//		}
+//	}
 
 	static String binaryToDecimal(String binary) {
 		String decimal = "";
@@ -239,7 +239,7 @@ public class LZWCompression {
 	
 
 //Input a String
-// This method, will convert that String to binary and then break the String up into ArrayList componenets each with size equal to the bitSize and return that ArrayList
+// This method, will convert that String to binary and then break the String up into ArrayList components each with size equal to the bitSize and return that ArrayList
 	static ArrayList <String> decimalToBinary (String decimal)
 	{
 		ArrayList <String> output = new ArrayList <String> (); 
