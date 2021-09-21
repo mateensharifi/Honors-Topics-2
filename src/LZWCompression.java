@@ -26,15 +26,14 @@ public class LZWCompression {
 		//		in = new Scanner(new File("input.txt"));
 		out = new PrintWriter(new File("dummy.txt"));
 		in = new Scanner(new File("lzw-file3.txt"));
-		
 		long startTime = System.currentTimeMillis();
 		init(); //Input/Output stuff
 		solve(); //Actually solving stuff
 		decode (); 
 		out.print(decoded);
-		System.out.println("Time elapsed: " + (System.currentTimeMillis() - startTime) + " milliseconds");
 		in.close();
 		out.close();
+		System.out.println("Time elapsed: " + (System.currentTimeMillis() - startTime) + " milliseconds");
 		
 	}
 
