@@ -25,7 +25,7 @@ public class LZWCompression {
 		// out = new PrintWriter(new File("output.txt"));
 		// in = new Scanner(new File("input.txt"));
 		out = new PrintWriter(new File("dummy.txt"));
-		in = new Scanner(new File("lzw-file3.txt"));
+		in = new Scanner(new File("lzw-file1.txt"));
 		long startTime = System.currentTimeMillis();
 		init(); // Input/Output stuff
 		solve(); // Actually solving stuff
@@ -36,19 +36,28 @@ public class LZWCompression {
 		System.out.println("Time elapsed: " + (System.currentTimeMillis() - startTime) + " milliseconds");
 
 	}
-
-	static void init() throws IOException { // (British method)
-		while (in.hasNext()) {
-			inputString += in.nextLine() + "\n";
-		}
-		inputString = inputString.trim(); // gets rid of unnecessary newline at string's end
+	public static void aSCIICreator(LinkedHashMap <String, String> input) { //Sets up ASCII table with values of input
 		for (int i = 0; i < 256; i++) { // set up ASCII table with default values
 			String binaryValue = Integer.toBinaryString(i);
 			while (binaryValue.length() < bitSizeEncoder) { //while loop in for loop is very time consuming, might be able to get rid of one loop (requires possibly rewriting convertToBinary as well) 
 				binaryValue = "0" + binaryValue;
 			}
-			map.put(binaryValue, "" + (char) (i));
+			input.put(binaryValue, "" + (char) (i));
 		}
+	}
+	static void init() throws IOException { // (British method)
+		while (in.hasNext()) {
+			inputString += in.nextLine() + "\n";
+		}
+		inputString = inputString.trim(); // gets rid of unnecessary newline at string's end
+//		for (int i = 0; i < 256; i++) { // set up ASCII table with default values
+//			String binaryValue = Integer.toBinaryString(i);
+//			while (binaryValue.length() < bitSizeEncoder) { //while loop in for loop is very time consuming, might be able to get rid of one loop (requires possibly rewriting convertToBinary as well) 
+//				binaryValue = "0" + binaryValue;
+//			}
+//			map.put(binaryValue, "" + (char) (i));
+//		}
+		aSCIICreator(map);
 	}
 
 	static void solve() throws IOException {
@@ -148,14 +157,15 @@ public class LZWCompression {
 		String currentEntry = "" + decodeInputString.get(left);
 		String nextEntry = "" + decodeInputString.get(right);
 
-		for (int i = 0; i < 256; i++) { // set up ASCII table with default values
-
-			String binaryValue = Integer.toBinaryString(i);
-			while (binaryValue.length() < bitSizeDecoder) { //while loop in for loop is very time consuming, might be able to get rid of one loop
-				binaryValue = "0" + binaryValue;
-			}
-			decodedMap.put(binaryValue, "" + (char) (i));
-		}
+//		for (int i = 0; i < 256; i++) { // set up ASCII table with default values
+//
+//			String binaryValue = Integer.toBinaryString(i);
+//			while (binaryValue.length() < bitSizeDecoder) { //while loop in for loop is very time consuming, might be able to get rid of one loop
+//				binaryValue = "0" + binaryValue;
+//			}
+//			decodedMap.put(binaryValue, "" + (char) (i));
+//		}
+		aSCIICreator(decodedMap);
 
 //		if(remainingSpaces == 0) { //If dictionary runs out of space, increase bit size by 1.
 //			remainingSpaces = (int) Math.pow(2, bitSizeDecoder++);
