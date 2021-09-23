@@ -21,7 +21,7 @@ public class LZWCompression {
 	static LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 	static LinkedHashMap<String, String> decodedMap = new LinkedHashMap<String, String>();
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException { //tester
 		// out = new PrintWriter(new File("output.txt"));
 		// in = new Scanner(new File("input.txt"));
 		out = new PrintWriter(new File("dummy.txt"));
@@ -141,12 +141,12 @@ public class LZWCompression {
 
 	static void decode() throws IOException {
 		decodeInputString = decimalToBinary(toDecodeInputString);
-		int l = 0;
-		int r = 1;
+		int left = 0;
+		int right = 1;
 		int remainingSpaces = 0;
 		String currentKey = "000011111111";
-		String currentEntry = "" + decodeInputString.get(l);
-		String nextEntry = "" + decodeInputString.get(r);
+		String currentEntry = "" + decodeInputString.get(left);
+		String nextEntry = "" + decodeInputString.get(right);
 
 		for (int i = 0; i < 256; i++) { // set up ASCII table with default values
 
@@ -165,20 +165,20 @@ public class LZWCompression {
 		// Need to update information every iteration:
 		remainingSpaces--; // Subtract one remaining space in the dictionary.
 
-		while (r < decodeInputString.size() + 1) {
-			if (r == decodeInputString.size()) {
+		while (right < decodeInputString.size() + 1) {
+			if (right == decodeInputString.size()) {
 				decoded += decodedMap.get(currentEntry);
-				r++;
-				l++;
+				right++;
+				left++;
 			} else if (nextEntry.compareTo(currentKey) >= 0) {
 				decoded += decodedMap.get(currentEntry);
 				currentKey = updateKey(currentKey);
 				decodedMap.put(currentKey, decodedMap.get(currentEntry) + decodedMap.get(getFirstBinaryString(currentEntry)));
-				r++;
-				l++;
-				currentEntry = "" + decodeInputString.get(l);
-				if (r != decodeInputString.size()) {
-					nextEntry = "" + decodeInputString.get(r);
+				right++;
+				left++;
+				currentEntry = "" + decodeInputString.get(left);
+				if (right != decodeInputString.size()) {
+					nextEntry = "" + decodeInputString.get(right);
 				} else {
 					nextEntry = "";
 				}
@@ -204,11 +204,11 @@ public class LZWCompression {
 				currentKey = updateKey(currentKey);
 				decodedMap.put(currentKey,
 						decodedMap.get(currentEntry) + decodedMap.get(getFirstBinaryString(nextEntry)));
-				r++;
-				l++;
-				currentEntry = "" + decodeInputString.get(l);
-				if (r != decodeInputString.size()) {
-					nextEntry = "" + decodeInputString.get(r);
+				right++;
+				left++;
+				currentEntry = "" + decodeInputString.get(left);
+				if (right != decodeInputString.size()) {
+					nextEntry = "" + decodeInputString.get(right);
 				} else {
 					nextEntry = "";
 				}
@@ -218,7 +218,7 @@ public class LZWCompression {
 	}
 
 //Input a String
-// This method, will convert that String to binary and then break the String up into ArrayList components each with size equal to the bitSize and return that ArrayList
+// This method will convert that String to binary and then break the String up into ArrayList components each with size equal to the bitSize and return that ArrayList
 	static ArrayList<String> decimalToBinary(String decimal) {
 		ArrayList<String> output = new ArrayList<String>();
 		String binary = "";
