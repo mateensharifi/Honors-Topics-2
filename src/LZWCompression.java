@@ -44,7 +44,7 @@ public class LZWCompression {
 		inputString = inputString.trim(); // gets rid of unnecessary newline at string's end
 		for (int i = 0; i < 256; i++) { // set up ASCII table with default values
 			String binaryValue = Integer.toBinaryString(i);
-			while (binaryValue.length() < bitSizeEncoder) {
+			while (binaryValue.length() < bitSizeEncoder) { //while loop in for loop is very time consuming, might be able to get rid of one loop (requires possibly rewriting convertToBinary as well) 
 				binaryValue = "0" + binaryValue;
 			}
 			map.put(binaryValue, "" + (char) (i));
@@ -151,7 +151,7 @@ public class LZWCompression {
 		for (int i = 0; i < 256; i++) { // set up ASCII table with default values
 
 			String binaryValue = Integer.toBinaryString(i);
-			while (binaryValue.length() < bitSizeDecoder) {
+			while (binaryValue.length() < bitSizeDecoder) { //while loop in for loop is very time consuming, might be able to get rid of one loop
 				binaryValue = "0" + binaryValue;
 			}
 			decodedMap.put(binaryValue, "" + (char) (i));
