@@ -22,10 +22,8 @@ public class LZWCompression {
 	static LinkedHashMap<String, String> decodedMap = new LinkedHashMap<String, String>();
 
 	public static void main(String[] args) throws IOException { //tester
-		// out = new PrintWriter(new File("output.txt"));
-		// in = new Scanner(new File("input.txt"));
 		out = new PrintWriter(new File("dummy.txt"));
-		in = new Scanner(new File("lzw-file1.txt"));
+		in = new Scanner(new File("lzw-file3.txt"));
 		long startTime = System.currentTimeMillis();
 		init(); // Input/Output stuff
 		solve(); // Actually solving stuff
@@ -50,13 +48,6 @@ public class LZWCompression {
 			inputString += in.nextLine() + "\n";
 		}
 		inputString = inputString.trim(); // gets rid of unnecessary newline at string's end
-//		for (int i = 0; i < 256; i++) { // set up ASCII table with default values
-//			String binaryValue = Integer.toBinaryString(i);
-//			while (binaryValue.length() < bitSizeEncoder) { //while loop in for loop is very time consuming, might be able to get rid of one loop (requires possibly rewriting convertToBinary as well) 
-//				binaryValue = "0" + binaryValue;
-//			}
-//			map.put(binaryValue, "" + (char) (i));
-//		}
 		aSCIICreator(map);
 	}
 
@@ -73,12 +64,6 @@ public class LZWCompression {
 
 		// Loop:
 		while (nextIndex < inputString.length() + 1) { // Parse through each index of the input string.
-
-//			if(remainingSpaces == 0) { //If dictionary runs out of space, increase bit size by 1.
-//				remainingSpaces = (int) Math.pow(2, bitSizeEncoder++);
-//				updateMap(map); //Updates dictionary with increased bit-size.
-//			}
-
 			// Need to update information every iteration:
 			remainingSpaces--; // Subtract one remaining space in the dictionary.
 			if (nextIndex == inputString.length()) {
@@ -91,15 +76,7 @@ public class LZWCompression {
 			} else {
 				ans += convertToBinary(currentEntry, map); // Add the current entry to the output answer.
 				currentKey = updateKey(currentKey); // Update our latest bit key to use.
-//				String searchKey = "000000000"; 
-//				for (int i = 0; i < map.size(); i++)
-//				{
-//					if (map.get(searchKey) == currentEntry)
-//					{
-//					break; 
-//					}
-//					updateKey(searchKey); 
-//				}
+
 				binary += currentKey;
 				map.put(currentKey, currentEntry + inputString.charAt(nextIndex)); // Add Current + Next to dictionary.
 				currentEntry = "" + inputString.charAt(nextIndex); // Update Current.
@@ -111,8 +88,6 @@ public class LZWCompression {
 		String str = binaryToDecimal(binary);
 		toDecodeInputString = binaryToDecimal(ans);
 		out.println(binaryToDecimal(ans));
-
-		// out.println(binary);
 	}
 
 	static String updateKey(String key) { // Adds 1 to the dictionary key in binary.
@@ -124,17 +99,6 @@ public class LZWCompression {
 		}
 		return newKey;
 	}
-//Not used
-//	static void updateMap( LinkedHashMap<String, String> mapper) { //Updating our dictionary with keys 1-bit longer.
-//		LinkedHashMap<String, String> temporaryMap = new LinkedHashMap<String, String>();
-//		for(String s: mapper.keySet()) {
-//			temporaryMap.put("0" + s, mapper.get(s));
-//		}
-//		mapper.clear();
-//		for(String s: temporaryMap.keySet()) {
-//			mapper.put(s, temporaryMap.get(s));
-//		}
-//	}
 
 	static String binaryToDecimal(String binary) {
 		String decimal = "";
@@ -156,21 +120,7 @@ public class LZWCompression {
 		String currentKey = "000011111111";
 		String currentEntry = "" + decodeInputString.get(left);
 		String nextEntry = "" + decodeInputString.get(right);
-
-//		for (int i = 0; i < 256; i++) { // set up ASCII table with default values
-//
-//			String binaryValue = Integer.toBinaryString(i);
-//			while (binaryValue.length() < bitSizeDecoder) { //while loop in for loop is very time consuming, might be able to get rid of one loop
-//				binaryValue = "0" + binaryValue;
-//			}
-//			decodedMap.put(binaryValue, "" + (char) (i));
-//		}
 		aSCIICreator(decodedMap);
-
-//		if(remainingSpaces == 0) { //If dictionary runs out of space, increase bit size by 1.
-//			remainingSpaces = (int) Math.pow(2, bitSizeDecoder++);
-//			updateMap(decodedMap); //Updates dictionary with increased bit-size.
-//		}
 
 		// Need to update information every iteration:
 		remainingSpaces--; // Subtract one remaining space in the dictionary.
