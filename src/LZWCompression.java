@@ -21,7 +21,7 @@ public class LZWCompression {
 	static LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 	static LinkedHashMap<String, String> decodedMap = new LinkedHashMap<String, String>();
 
-	public static void main(String[] args) throws IOException { //tester
+	public static void main(String[] args) throws IOException { // tester
 		out = new PrintWriter(new File("dummy.txt"));
 		in = new Scanner(new File("lzw-file3.txt"));
 		long startTime = System.currentTimeMillis();
@@ -34,15 +34,19 @@ public class LZWCompression {
 		System.out.println("Time elapsed: " + (System.currentTimeMillis() - startTime) + " milliseconds");
 
 	}
-	public static void aSCIICreator(LinkedHashMap <String, String> input) { //Sets up ASCII table with values of input
+
+	public static void aSCIICreator(LinkedHashMap<String, String> input) { // Sets up ASCII table with values of input
 		for (int i = 0; i < 256; i++) { // set up ASCII table with default values
 			String binaryValue = Integer.toBinaryString(i);
-			while (binaryValue.length() < bitSizeEncoder) { //while loop in for loop is very time consuming, might be able to get rid of one loop (requires possibly rewriting convertToBinary as well) 
+			while (binaryValue.length() < bitSizeEncoder) { // while loop in for loop is very time consuming, might be
+															// able to get rid of one loop (requires possibly rewriting
+															// convertToBinary as well)
 				binaryValue = "0" + binaryValue;
 			}
 			input.put(binaryValue, "" + (char) (i));
 		}
 	}
+
 	static void init() throws IOException { // (British method)
 		while (in.hasNext()) {
 			inputString += in.nextLine() + "\n";
@@ -71,7 +75,7 @@ public class LZWCompression {
 				currentKey = updateKey(currentKey); // Update our latest bit key to use.
 				binary += currentKey;
 			} else if (map.containsValue(currentEntry + inputString.charAt(nextIndex))) { // Is Current + Next in our
-																						// dictionary?
+																							// dictionary?
 				currentEntry += inputString.charAt(nextIndex); // If so, update our current entry string.
 			} else {
 				ans += convertToBinary(currentEntry, map); // Add the current entry to the output answer.
@@ -133,7 +137,8 @@ public class LZWCompression {
 			} else if (nextEntry.compareTo(currentKey) >= 0) {
 				decoded += decodedMap.get(currentEntry);
 				currentKey = updateKey(currentKey);
-				decodedMap.put(currentKey, decodedMap.get(currentEntry) + decodedMap.get(getFirstBinaryString(currentEntry)));
+				decodedMap.put(currentKey,
+						decodedMap.get(currentEntry) + decodedMap.get(getFirstBinaryString(currentEntry)));
 				right++;
 				left++;
 				currentEntry = "" + decodeInputString.get(left);
